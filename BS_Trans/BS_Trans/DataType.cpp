@@ -28,13 +28,12 @@ TokenQueue::TokenQueue()
 }
 void TokenQueue::addChar(char c)
 {
-    tqcValue += c;
-    if(!isOneToken(tqcValue))
+    if(!isOneToken(tqcValue + c) || c == 0)
     {
-        string tmpValue;
+        Token* token = new Token(getType(tqcValue), tqcValue);
         
-        tmpValue = tqcValue.substr(0,tqcValue.length()-1);
-        Token* token = new Token(getType(tmpValue), tmpValue);
+        ALERT_TOKEN(token->type, token->value);
+        
         this->tokens.push_back(*token);
         
         tqcValue = c;
@@ -42,8 +41,26 @@ void TokenQueue::addChar(char c)
 }
 bool TokenQueue::isOneToken(string value) const
 {
+    ;
     return false;
 }
+
+long TokenQueue::contain(string value) const
+{
+    long index = -1;
+    const long MAX_INDEX = tokens.size();
+    for(long i = 0; i < MAX_INDEX; i++)
+    {
+        string tmpValue = tokens.at(i).value;
+        if(tmpValue == value)
+        {
+            index = i;
+            break;
+        }
+    }
+    return index;
+}
+
 int TokenQueue::getType(string value) const
 {
     return TOKEN_TYPE_NONE;

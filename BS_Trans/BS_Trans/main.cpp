@@ -21,17 +21,17 @@ int main(int argc, const char * argv[])
     FILE* file = fopen("test.ll", "rb");
     
     //词法分析
-//    TokenQueue* tQueue = new TokenQueue();
+    TokenQueue* tQueue = new TokenQueue();
     char tmpChar;
     
     while(!feof(file))
     {
         tmpChar = fgetc(file);
         // 按字符读取程序
-//        tQueue->addChar(tmpChar);
+        tQueue->addChar(tmpChar);
     }
     //程序结束
-//    tQueue->addChar(0);
+    tQueue->addChar(0);
     
     //语法分析
     

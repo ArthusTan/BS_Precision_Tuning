@@ -9,11 +9,16 @@
 #ifndef DataType_hpp
 #define DataType_hpp
 
+//#include <iostream>
+//#include <cstdlib>
 #include <stdio.h>
 #include <string>
 #include <vector>
 
 #define tqcValue this->cacheValue
+
+#define ALERT(str) printf("\n...alert : %s\n", (str).c_str())
+#define ALERT_TOKEN(type,value) printf("\n...GetToken : (%d) %s\n", type, (value).c_str())
 
 using namespace std;
 /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
@@ -25,6 +30,9 @@ enum{
     TOKEN_TYPE_BOUNDARY_SYMBOL,     //边界符 - 4
     TOKEN_TYPE_OPERATOR             //操作符 - 5
     // (bitcode中是否存在操作符的概念？)
+};
+static const string boundarySymbol[] = {
+    "{","}","(",")"," ",",",";"
 };
 /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 class Token
@@ -51,6 +59,7 @@ private:
     string cacheValue;
     int    cacheType;
     bool isOneToken(string value) const;
+    long contain(string value) const;
     int  getType(string value) const;
 };
 /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
