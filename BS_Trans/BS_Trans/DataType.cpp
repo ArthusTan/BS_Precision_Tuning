@@ -27,44 +27,28 @@ vector<string> __tWord = {
     // Other_Types:
     "x86_mmx", "label", "token", "metadata", "opaque"
 };
+vector<string> __oWord = {
+    "icmp", "eq", "ne", "ugt", "uge", "ult", "ule", "sgt", "sge", "slt", "sle", "fcmp", "oeq", "ogt", "oge", "olt", "ole", "one", "ord", "ueq", "une", "uno",
+/*Binary Operations*/
+    "add", "fadd", "sub", "fsub", "mul", "fmul", "udiv", "sdiv", "fdiv", "urem", "srem", "frem",
+/*Bitwise Binary Operations*/
+    "shl", "nuw", "nsw", "lshr", "ashr", "exact", "and", "or", "xor"
+};
 vector<string> __rWord = {
 /* Constant */
     "true", "false", "null", "none", "zeroinitializer",
 /*Poison Values*/
-    "phi", "select", "invoke", "resume",
-    "asm", "sideeffect", "alignstack", "inteldialect",
-    "ret", "catchret", "cleanupret",
-    "br", "indirectbr", "callbr",
-    "switch", "catchswitch",
-    "unreachable", "fneg"
+    "phi", "select", "invoke", "resume", "asm", "sideeffect", "alignstack", "inteldialect", "ret", "catchret", "cleanupret", "br", "indirectbr", "callbr", "switch", "catchswitch", "unreachable", "fneg",
 /*Vector Options*/
-    "extractelement",
-    "insertelement",
-    "shufflevector",
+    "extractelement", "insertelement", "shufflevector",
 /*Aggregate Operations*/
-    "extractvalue",
-    "insertvalue",
-/*Bitwise Binary Operations*/
-    "shl", "nuw", "nsw",
-    "lshr", "ashr", "exact",
-    "and", "or", "xor",
-/*Binary Operations*/
-    "add", "fadd",
-    "sub", "fsub",
-    "mul", "fmul",
-    "udiv", "sdiv", "fdiv",
-    "urem", "srem", "frem",
+    "extractvalue", "insertvalue",
 /*Memory Access and Addressing Operations*/
     "alloca", "load", "store", "fence", "cmpxchg", "atomicrmw", "getelementptr", "inbounds",
 /*Conversion Operations*/
     "to", "trunc", "zext", "sext", "fptrunc", "fpext", "fptoui", "fptosi", "uitofp", "sitofp", "ptrtoint", "inttoptr", "bitcast", "addrspacecast",
 /*Other Operations*/
-    "icmp", "eq", "ne", "ugt", "uge", "ult", "ule", "sgt", "sge", "slt", "sle",
-    "fcmp", "oeq", "ogt", "oge", "olt", "ole", "one", "ord", "ueq", "une", "uno",
-    "select", "freeze",
-    "call",
-    /**/
-    "global", "undef", "define", "align", "bitcast", "optnone"
+     "select", "freeze", "call", "global", "undef", "define", "align", "bitcast", "optnone"
 };
 
 /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
@@ -215,6 +199,10 @@ void TokenQueue::push_back()
     else if(__contain(this->cache, __tWord))
     {
         this->type = TOKEN_TYPE_RESERVED_TYPE;
+    }
+    else if(__contain(this->cache, __oWord))
+    {
+        this->type = TOKEN_TYPE_OPERATOR;
     }
     else if(__contain(this->cache, __rWord))
     {
