@@ -9,32 +9,34 @@
 #ifndef DataType_hpp
 #define DataType_hpp
 
-//#include <iostream>
-//#include <cstdlib>
 #include <stdio.h>
 #include <string>
 #include <vector>
 
-#define tqcValue this->cacheValue
 
-#define ALERT(str) printf("\n...alert : %s\n", (str).c_str())
-#define ALERT_TOKEN(type,value) printf("\n...GetToken : (%d) %s\n", type, (value).c_str())
+#define ALERT(str)              printf("...alert : %s\n", (str).c_str())
 
 using namespace std;
+
 /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
 enum{
-    TOKEN_TYPE_NONE = 0,            //空置位 - 0
-    TOKEN_TYPE_IDENTIFIER,          //标志符 - 1
-    TOKEN_TYPE_CONSTANT,            //常量。 - 2
-    TOKEN_TYPE_RESERVED_WORD,       //保留字 - 3
-    TOKEN_TYPE_BOUNDARY_SYMBOL,     //边界符 - 4
-    TOKEN_TYPE_OPERATOR             //操作符 - 5
-    // (bitcode中是否存在操作符的概念？)
+    TOKEN_TYPE_NONE = -1,           //空置位
+    TOKEN_TYPE_IDENTIFIER,          //标志符
+    TOKEN_TYPE_CONSTANT_NUMBER,     //常量-number。
+    TOKEN_TYPE_CONSTANT_STRING,     //常量-string。
+    TOKEN_TYPE_RESERVED_WORD,       //保留字-????
+    TOKEN_TYPE_RESERVED_TYPE,       //保留字-type
+    TOKEN_TYPE_BOUNDARY_SYMBOL,     //边界符
+    TOKEN_TYPE_OPERATOR,            //操作符
 };
-static const string boundarySymbol[] = {
-    "{","}","(",")"," ",",",";"
-};
+
+string __GET_TYPE(int type);
+
+bool __contain(string str, vector<string> word);
+
 /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
 class Token
 {
 public:
@@ -45,6 +47,7 @@ public:
     Token(Token* token);
     Token getToken(string str);
 };
+
 /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 class TokenQueue
 {
@@ -52,15 +55,17 @@ public:
     vector<Token> tokens;
     
     TokenQueue();
-    void clear();
     void addChar(char c);
 
 private:
-    string cacheValue;
-    int    cacheType;
-    bool isOneToken(string value) const;
-    long contain(string value) const;
-    int  getType(string value) const;
+    string cache;
+    int    type;
+    
+    int getType(string value);
+    void push_back();
+    bool is_string() const;
+    bool is_bSymbol(char c) const;
+    bool is_oSymbol(char c) const;
 };
 /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 class AbstractSyntaxTreeNode
@@ -82,7 +87,6 @@ public:
     Token root;
     AbstractSyntaxTree();
     
-    void clear();
     void buildAST(TokenQueue tQueue);
 };
 /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */

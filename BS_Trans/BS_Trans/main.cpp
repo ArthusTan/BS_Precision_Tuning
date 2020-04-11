@@ -27,13 +27,19 @@ int main(int argc, const char * argv[])
     while(!feof(file))
     {
         tmpChar = fgetc(file);
-        // 按字符读取程序
+        if(tmpChar == ';')
+        {
+            while(!feof(file) && tmpChar != '\n')
+            {
+                tmpChar = fgetc(file);
+            }
+        }
         tQueue->addChar(tmpChar);
     }
-    //程序结束
     tQueue->addChar(0);
     
-    //语法分析
+    
+//    //语法分析
     
     return 0;
 }
